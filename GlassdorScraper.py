@@ -13,18 +13,19 @@ def openWebdriver() :
 def GetInfo(Job_title,Amount):
     openWebdriver()
     browser.maximize_window()
-    browser.get("https://www.glassdoor.com/Job")
+    browser.get("https://www.glassdoor.com/Job")  #open site 
     sleep(1)
-    Navigtion_bar = browser.find_element("xpath","//*[@id='sc.keyword']") 
-    Navigtion_bar.click()
+    Navigtion_bar = browser.find_element("xpath","//*[@id='sc.keyword']") #Navigation bar
+    Navigtion_bar.click()  #click on it 
     sleep(1)
-    Navigtion_bar.send_keys("data analyst")
+    Navigtion_bar.send_keys("data analyst")  #position to scrap
     Navigtion_bar.send_keys(Keys.ENTER)
     #sleep(100)
     for i in range (0,Amount+1,1):
         print(i%30+1)
     
         Description = browser.find_element("xpath","//*[@id='MainCol']/div[1]/ul/li["+str(i%30+1)+"]/div[2]/a/span")
+        print("//*[@id='MainCol']/div[1]/ul/li["+str(i%30+1)+"]/div[2]/a/span")
         Description = Description.text
 
         try:
@@ -38,7 +39,8 @@ def GetInfo(Job_title,Amount):
         print(Salary)
         print("_____")
 
-        if (i%30==0 and i!=0):
+
+        if (i%30==1 and i!=1):
             print("List finished")
             Next_Page = browser.find_element("xpath","//*[@id='MainCol']/div[2]/div/div[1]/button[7]")
             Next_Page.click()
@@ -55,12 +57,9 @@ def GetInfo(Job_title,Amount):
                 
                 
 
-            
-
     sleep(10000)
     browser.close()
     browser.quit()
 
 
-GetInfo("Software engineer",120)
-
+GetInfo("Software engineer",35)
