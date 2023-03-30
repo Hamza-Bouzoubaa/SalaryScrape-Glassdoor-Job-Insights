@@ -87,7 +87,7 @@ def TurnPage():
 
 
 def scraping(Amount):
-    data = [["Company","Salary","JobTitle","Location","JobDescription","Rating","Industry","size","Founded","Revenue"]]
+    data = []
     for i in range (1,Amount+1+int(Amount//31),1):
         k = i%31
         
@@ -109,10 +109,8 @@ def scraping(Amount):
             Founded = findElement(9,k)
             Revenue = findElement(10,k)
 
-
-
             data.append([Company,Salary,JobTitle,Location,JobDescription,Rating,Industry,size,Founded,Revenue])
-            print(i,k)
+            
         except:
             print(CatchSignUpPopUp())
             print("Error")
@@ -130,6 +128,8 @@ def GetInfo(Job_title,Amount):
     browser.close()
     browser.quit()
     print("closed")
-    return pd.DataFrame(data)
+    df = pd.DataFrame(data)
+    df = df.rename(columns={0: 'Company', 1: 'Salary',2:"JobTitle",3:"Location",4:"Job Description",5:"Rating",6:"Industry",7:"Size",8:"Founded",9:"Revenue"})
+    return df
 
 
