@@ -1,5 +1,5 @@
 import pandas as pd 
-df = pd.read_excel("output2.xlsx")
+df = pd.read_excel("output.xlsx")
 
 #Salary
 df = df[df["Salary"]!=-1]
@@ -13,24 +13,27 @@ df['Max_Salary'] = Salary.apply(lambda x: float(x.split('-')[-1]))
 df['Average Salary'] = (df.Min_Salary + df.Max_Salary)/2
   
 #Location 
-df['Job_State'] = df['Location'].apply(lambda x: x.split(',')[1])
+df['Job_State'] = df['Location'].apply(lambda x: x.split(',')[-1])
+
+
+
 df['Job_City'] = df['Location'].apply(lambda x: x.split(',')[0])
 x= df.Job_State.value_counts()
 
 
 #age 
 df['age'] = df.Founded.apply(lambda x: str(x).split()[0])
-df['age'] = df.age.apply(lambda x: x if (x[0]==str(1) or x[0]==str(2) ) else 0 )
-df['age'] = df.age.apply(lambda x:( 2023 - int(x)))
+df['age'] = df.age.apply(lambda x: x if (x[0]==str(1) or x[0]==str(2) ) else -1 )
+df['age'] = df.age.apply(lambda x:( (2023 - int(x)) if int(x)>0 else -1))
 
 #Job description 
-df['Python'] = df['Job Description'].apply(lambda x: 1 if 'python' in x.lower() else 0)
-df['r_Studio'] = df['Job Description'].apply(lambda x: 1 if ('r studio' in x.lower() or 'r-studio' in x.lower()) else 0)
-df['Spark'] = df['Job Description'].apply(lambda x: 1 if 'spark' in x.lower() else 0)
-df['aws'] = df['Job Description'].apply(lambda x: 1 if 'aws' in x.lower() else 0)
-df['excel'] = df['Job Description'].apply(lambda x: 1 if 'excel' in x.lower() else 0)
+df['Python'] = df['Job Description'].apply(lambda x: 1 if 'python' in str(x).lower() else 0)
+df['r_Studio'] = df['Job Description'].apply(lambda x: 1 if ('r studio' in str(x).lower() or 'r-studio' in str(x).lower()) else 0)
+df['Spark'] = df['Job Description'].apply(lambda x: 1 if 'spark' in str(x).lower() else 0)
+df['aws'] = df['Job Description'].apply(lambda x: 1 if 'aws' in str(x).lower() else 0)
+df['excel'] = df['Job Description'].apply(lambda x: 1 if 'excel' in str(x).lower() else 0)
 
-print(df.excel.value_counts())
+print(df.aws.value_counts())
 
 
 print(df.columns)
